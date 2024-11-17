@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriately as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <meta name="description" content="ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models">
+  <meta property="og:title" content="ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models"/>
+  <meta property="og:description" content="We propose ReEdit, a modular and efficient end-to-end framework that captures edits in both text and image modalities while ensuring the fidelity of the edited image."/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200x630 -->
+  <meta property="og:image" content="static/images/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models">
+  <meta name="twitter:description" content="We propose ReEdit, a modular and efficient end-to-end framework that captures edits in both text and image modalities while ensuring the fidelity of the edited image.">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimensions are 1200x600 -->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by -->
+  <meta name="keywords" content="Image Editing, Diffusion Models, Multimodal, Exemplar-Based Editing, ReEdit, Text-to-Image, Computer Vision, Machine Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+            <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models</h1>
+            <h1 class="title is-4 publication-title">WACV 2025</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=Oa5hGYgAAAAJ" target="_blank">Ashutosh Srivastava</a><sup>1</sup><sup>*</sup><sup>†</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=8HC8W9EAAAAJ&hl=en" target="_blank">Tarun Ram Menta</a><sup>2</sup><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=g--_R9wAAAAJ&view_op=list_works" target="_blank">Abhinav Java</a><sup>3</sup><sup>*</sup>,</span>
+              <span class="author-block">
+                <a href="#" target="_blank">Avadhoot Jadhav</a><sup>4</sup><sup>†</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=xkv3k4QAAAAJ&hl=en" target="_blank">Silky Singh</a><sup>5</sup><sup>‡</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=1sWyXaoAAAAJ&hl=en" target="_blank">Surgan Jandial</a><sup>6</sup><sup>‡</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=n8iUBg8AAAAJ&hl=en" target="_blank">Balaji Krishnamurthy</a><sup>2</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <sup>1</sup>Indian Institute of Technology, Roorkee<br>
+                <sup>2</sup>Adobe MDSR
+                <sup>3</sup>Microsoft Research<br>
+                <sup>4</sup>Indian Institute of Technology, Bombay<br>
+                <sup>5</sup>Stanford University
+                <sup>6</sup>Carnegie Mellon University
+              </span>
+              <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+              <span class="eql-cntrb"><small><br><sup>†</sup>Work done during internship at Adobe MDSR</small></span>
+              <span class="eql-cntrb"><small><br><sup>‡</sup>Work done while at Adobe</small></span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                   <!-- Arxiv PDF link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2411.03982.pdf" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- Supplementary PDF link -->
+              <!-- <span class="link-block">
+                <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fas fa-file-pdf"></i>
+                </span>
+                <span>Supplementary</span>
+              </a>
+            </span> -->
+
+            <!-- Github link -->
+            <span class="link-block">
+              <a href="#"
+              class="external-link button is-normal is-rounded is-dark" onclick="alert('Coming Soon')">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>Code</span>
+            </a>
+          </span>
+
+          <!-- ArXiv abstract Link -->
+          <span class="link-block">
+            <a href="https://arxiv.org/abs/2411.03982" target="_blank"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+              <i class="ai ai-arxiv"></i>
+            </span>
+            <span>arXiv</span>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- Image carousel -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        
+        <!-- Example Set 1 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/add_cowboy/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/add_cowboy/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/add_cowboy/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/add_cowboy/llava_ip_pnp_0.25.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <!-- Example Set 4 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_dress2suit-21/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_dress2suit-21/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_dress2suit-21/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_dress2suit-21/llava_ip_pnp_0.3.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <!-- Example Set 2 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_ocean-41/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_ocean-41/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_ocean-41/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_ocean-41/llava_ip_pnp_0.35.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example Set 3 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_rain-23/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_rain-23/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_rain-23/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/bg_rain-23/llava_ip_pnp_0.3.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example Set 5 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_geisha-23/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_geisha-23/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_geisha-23/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/poc_geisha-23/llava_ip_pnp_0.44999999999999996.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example Set 6 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_man-31/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_man-31/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_man-31/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_man-31/llava_ip_pnp_0.2.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example Set 7 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_tikibar-21/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_tikibar-21/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_tikibar-21/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/examples/sor_tikibar-21/llava_ip_pnp_0.3.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appendix Example Set 1 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/add_glasses2-21/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/add_glasses2-21/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/add_glasses2-21/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/add_glasses2-21/llava_ip_pnp_0.35.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appendix Example Set 2 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_cottonCandy-31/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_cottonCandy-31/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_cottonCandy-31/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_cottonCandy-31/llava_ip_pnp_0.35.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appendix Example Set 3 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/style_lego-12/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/style_lego-12/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/style_lego-12/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/style_lego-12/llava_ip_pnp_0.2.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appendix Example Set 4 -->
+        <div class="item">
+          <div class="columns is-centered">
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_rainforest-12/0_0.jpg" alt="Exemplar Image x">
+                <figcaption class="has-text-centered">Exemplar Image (x)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_rainforest-12/0_1.jpg" alt="Exemplar Edit x_edit">
+                <figcaption class="has-text-centered">Exemplar Edit (x<sub>edit</sub>)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_rainforest-12/1_0.jpg" alt="Test Image y">
+                <figcaption class="has-text-centered">Test Image (y)</figcaption>
+              </figure>
+            </div>
+            <div class="column is-one-quarter">
+              <figure class="image">
+                <img src="static/images/appendix_images/bg_rainforest-12/llava_ip_pnp_0.35.jpg" alt="ReEdit Output">
+                <figcaption class="has-text-centered">ReEdit Output</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End image carousel -->
+
+<!-- Teaser video-->
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Modern Text-to-Image (T2I) Diffusion models have revolutionized image editing by enabling the generation of high-quality photorealistic images. While the de facto method for performing edits with T2I models is through text instructions, this approach is non-trivial due to the complex many-to-many mapping between natural language and images. In this work, we address <span class="ltx_text ltx_font_italic">exemplar-based image editing</span> – the task of transferring an edit from an exemplar pair to a content image(s). We propose <span class="ltx_text ltx_font_smallcaps">ReEdit</span>, a modular and efficient end-to-end framework that captures edits in both text and image modalities while ensuring the fidelity of the edited image. We validate the effectiveness of <span class="ltx_text ltx_font_smallcaps">ReEdit</span> through extensive comparisons with state-of-the-art baselines and sensitivity analyses of key design choices. Our results demonstrate that <span class="ltx_text ltx_font_smallcaps">ReEdit</span> consistently outperforms contemporary approaches both qualitatively and quantitatively.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Method -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/overview.jpg" alt="ReEdit Method" class="method-image"/>
+            <p>Our method involves a sophisticated process of <i>exemplar-based image editing</i> using <i>diffusion models</i>. The approach begins with <b>extracting image embeddings</b> from both the original image \(x\) and the edited exemplar \(x_{\text{edit}}\) using the encoder \(\mathcal{E}_{\text{img}}\). The difference between these embeddings is pooled to form \(\Delta_{\text{img}}\), capturing the nuanced details of the edit. Simultaneously, <i>text guidance</i> is incorporated through \(\mathcal{E}_{\text{text}}(g_{\text{caption}})\), providing additional context for the edit. These components are combined into a guidance vector \(g\), which is used to condition the diffusion model \(M\).</p>
+
+            <p>The process involves <b>DDIM inversion</b> to map the target image \(y\) into a latent space, followed by denoising to maintain the structural integrity of the original image. The model employs <b>cross attention</b>, <b>self-attention injection</b>, and <b>feature injection</b> to ensure precise and contextually relevant edits. This method allows for high-quality image transformations that respect the original content while applying the desired changes, as demonstrated in the final output \(\hat{y}_{\text{edit}}\).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Method-->
+
+<!-- Dataset Creation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+      <h2 class="title is-4">Dataset Creation</h2>
+        <p>
+          The dataset used for evaluation consists of a diverse range of edits, carefully curated to ensure a comprehensive representation of various editing techniques. The table below summarizes the types of edits included in the dataset:
+        </p>
+        <br>
+        <div class="columns is-centered">
+        <table class="table is-bordered is-striped">
+          <thead>
+            <tr>
+              <th>Type of Edit</th>
+              <th>Number of Examples</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Global Style Transfer</td>
+              <td>428</td>
+            </tr>
+            <tr>
+              <td>Background Change</td>
+              <td>212</td>
+            </tr>
+            <tr>
+              <td>Localized Style Transfer</td>
+              <td>290</td>
+            </tr>
+            <tr>
+              <td>Object Replacement</td>
+              <td>366</td>
+            </tr>
+            <tr>
+              <td>Motion Edit</td>
+              <td>14</td>
+            </tr>
+            <tr>
+              <td>Object Insertion</td>
+              <td>164</td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <th>1474</th>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="is-italic">
+          Summary and statistics of the types of edits in the evaluation dataset. Special care was taken to ensure diversity of edit categories.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Dataset Creation -->
+
+<!-- Hyperparameter -->
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline is-centered">
+    <h2 class="title is-4">Effect of Varying Hyperparameter Lambda</h2>
+    </div>
+    <div class="columns is-multiline is-centered">
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_mosaic-21/0_0.jpg" alt="Image x">
+          <figcaption class="has-text-centered">x</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_mosaic-21/0_1.jpg" alt="Image xedit">
+          <figcaption class="has-text-centered">x<sub>edit</sub></figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_mosaic-21/1_0.jpg" alt="Image y">
+          <figcaption class="has-text-centered">y</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_mosaic-21/llava_ip_pnp_1.jpg" alt="Lambda 0">
+          <figcaption class="has-text-centered">λ = 0</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_mosaic-21/llava_ip_pnp_0.39999999999999997.jpg" alt="Lambda 0.6">
+          <figcaption class="has-text-centered">λ = 0.6</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_mosaic-21/llava_ip_pnp_0.3.jpg" alt="Lambda 0.7">
+          <figcaption class="has-text-centered">λ = 0.7</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_mosaic-21/llava_ip_pnp_0.2.jpg" alt="Lambda 0.8">
+          <figcaption class="has-text-centered">λ = 0.8</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="columns is-multiline is-centered">
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_snowed-43/0_0.jpg" alt="Image x">
+          <figcaption class="has-text-centered">x</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_snowed-43/0_1.jpg" alt="Image xedit">
+          <figcaption class="has-text-centered">x<sub>edit</sub></figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_snowed-43/1_0.jpg" alt="Image y">
+          <figcaption class="has-text-centered">y</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_snowed-43/llava_ip_pnp_1.jpg" alt="Lambda 0">
+          <figcaption class="has-text-centered">λ = 0</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_snowed-43/llava_ip_pnp_0.39999999999999997.jpg" alt="Lambda 0.6">
+          <figcaption class="has-text-centered">λ = 0.6</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_snowed-43/llava_ip_pnp_0.3.jpg" alt="Lambda 0.7">
+          <figcaption class="has-text-centered">λ = 0.7</figcaption>
+        </figure>
+      </div>
+      <div class="column is-one-seventh">
+        <figure class="image">
+          <img src="static/images/slider/style_snowed-43/llava_ip_pnp_0.2.jpg" alt="Lambda 0.8">
+          <figcaption class="has-text-centered">λ = 0.8</figcaption>
+        </figure>
+      </div>
+    </div>
+    <p class="is-italic has-text-centered">
+      Depiction of the effect of edit weight λ on the edited image. Higher values correspond to higher influence from the desired edit.
+    </p>
+  </div>
+</section>
+<!-- End Hyperparameter -->
+<!-- You can update this section with your own images and captions -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/carousel1.jpg" alt="Example of ReEdit output"/>
+        <h2 class="subtitle has-text-centered">
+          Example of ReEdit output.
+        </h2>
+      </div>
+      <!-- Add more items as needed -->
+    </div>
+  </div>
+  </div>
+</section>
+<!-- End image carousel -->
+
+
+<!-- Video presentation -->
+<!-- Update with your video presentation if available -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      Paper video.
+      <h2 class="title is-3">Video Presentation</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <div class="publication-video">
+            YouTube embed code here
+            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- End video presentation -->
+
+<!--BibTex citation -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{srivastava2024reedit,
+  title={ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models},
+  author={Srivastava, Ashutosh and Menta, Tarun Ram and Java, Abhinav and Jadhav, Avadhoot and Singh, Silky and Jandial, Surgan and Krishnamurthy, Balaji},
+  journal={arXiv preprint arXiv:2411.03982},
+  year={2024}
+}</code></pre>
+  </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Nerfies</a> template.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+  <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
