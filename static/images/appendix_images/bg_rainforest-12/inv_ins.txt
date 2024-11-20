@@ -1,0 +1,1 @@
+Change helmet to red, paddle to blue, background to lush green forest, add blue tint to water, increase saturation.
