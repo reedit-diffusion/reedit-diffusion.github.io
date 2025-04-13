@@ -1,49 +1,109 @@
-# Academic Project Page Template
-This is an academic paper project page template.
+# ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models
 
+ReEdit is an efficient end-to-end optimization-free framework for exemplar-based image editing. Unlike existing approaches, it doesn't require fine-tuning or optimization during inference time.
 
-Example project pages built using this template are:
-- https://vision.huji.ac.il/spectral_detuning/
-- https://vision.huji.ac.il/podd/
-- https://dreamix-video-editing.github.io
-- https://vision.huji.ac.il/conffusion/
-- https://vision.huji.ac.il/3d_ads/
-- https://vision.huji.ac.il/ssrl_ad/
-- https://vision.huji.ac.il/deepsim/
+## Overview
 
+Given a pair of exemplar images (original and edited), ReEdit captures the edit and applies it to a test image to obtain the corresponding edited version. The framework consists of three main components:
 
+1. **Image Space Edit Capture**: Uses pretrained adapter modules to capture edits in the image embedding space
+2. **Text Space Edit Capture**: Incorporates multimodal VLMs for detailed reasoning and edit description
+3. **Content Preservation**: Conditions image generation on test image features and self-attention maps
 
-## Start using the template
-To start using the template click on `Use this Template`.
+## Key Features
 
-The template uses html for controlling the content and css for controlling the style. 
-To edit the websites contents edit the `index.html` file. It contains different HTML "building blocks", use whichever ones you need and comment out the rest.  
+- No fine-tuning or optimization required during inference
+- ~4x faster than baseline methods
+- Preserves original image structure while applying edits
+- Works with various types of edits
+- Model-agnostic (independent of base diffusion model)
 
-**IMPORTANT!** Make sure to replace the `favicon.ico` under `static/images/` with one of your own, otherwise your favicon is going to be a dreambooth image of me.
+## Installation
 
-## Components
-- Teaser video
-- Images Carousel
-- Youtube embedding
-- Video Carousel
-- PDF Poster
-- Bibtex citation
+This project has 2 different conda environments `llava` and `reedit`. You can set up these environments manually by running:
 
-## Tips:
-- The `index.html` file contains comments instructing you what to replace, you should follow these comments.
-- The `meta` tags in the `index.html` file are used to provide metadata about your paper 
-(e.g. helping search engine index the website, showing a preview image when sharing the website, etc.)
-- The resolution of images and videos can usually be around 1920-2048, there rarely a need for better resolution that take longer to load. 
-- All the images and videos you use should be compressed to allow for fast loading of the website (and thus better indexing by search engines). For images, you can use [TinyPNG](https://tinypng.com), for videos you can need to find the tradeoff between size and quality.
-- When using large video files (larger than 10MB), it's better to use youtube for hosting the video as serving the video from the website can take time.
-- Using a tracker can help you analyze the traffic and see where users came from. [statcounter](https://statcounter.com) is a free, easy to use tracker that takes under 5 minutes to set up. 
-- This project page can also be made into a github pages website.
-- Replace the favicon to one of your choosing (the default one is of the Hebrew University). 
-- Suggestions, improvements and comments are welcome, simply open an issue or contact me. You can find my contact information at [https://pages.cs.huji.ac.il/eliahu-horwitz/](https://pages.cs.huji.ac.il/eliahu-horwitz/)
+### llava environment
+```bash
+cd LLaVA
+conda create -n llava python=3.10 -y
+conda activate llava 
+pip install --upgrade pip
+pip install -e .
+pip install protobuf
+```
 
-## Acknowledgments
-Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.
+### reedit environment
+```bash
+conda create -n reedit python=3.9 -y
+conda activate reedit
+pip install -r requirements.txt
+```
 
-## Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-# reedit
+## Usage
+First add your exemplar pairs in the `data` directory in the following format:
+```
+data
+└── add_butterfly
+    ├── 0_0.png
+    ├── 0_1.png
+    └── 1_0.png
+```
+
+### Generate LLaVA captions
+To generate LLaVA captions for your exemplar pairs, run:
+```bash
+python preprocess-llava.py --directory data
+cd LLaVA
+python edit.py --img_fol ../data --res_fol ../llava_results
+python get_caption.py --img_fol ../data --res_fol ../llava_results
+python3 truncate_caption.py --res_fol ../llava_results
+```
+
+### Preprocessing for PNP
+```bash
+python3 preprocess.py --data_path data
+```
+
+### Run the altered PNP script
+```bash
+python3 preprocess.py --data_path data
+python3 pnp.py --name reedit --group reedit
+```
+
+## Dataset
+
+The project includes a curated dataset of 1474 exemplar pairs covering various edit types:
+
+- Global Style Transfer (428 pairs)
+- Background Change (212 pairs)
+- Localized Style Transfer (290 pairs)
+- Object Replacement (366 pairs)
+- Motion Edit (14 pairs)
+- Object Insertion (164 pairs)
+
+## Architecture
+
+ReEdit combines several key components:
+
+1. **IP-Adapter**: Handles image prompt conditioning
+2. **LLaVA Integration**: Provides detailed reasoning and text descriptions
+3. **PNP Module**: Maintains the structure of the test image while performing the edit
+
+## Performance
+
+Compared to baselines:
+- 4x faster inference time
+- Better consistency in non-edited regions
+- Higher edit accuracy
+- Improved structure preservation
+
+## Citation
+
+```
+@article{srivastava2024reedit,
+  title={ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models},
+  author={Srivastava, Ashutosh and Menta, Tarun Ram and Java, Abhinav and Jadhav, Avadhoot and Singh, Silky and Jandial, Surgan and Krishnamurthy, Balaji},
+  journal={arXiv preprint arXiv:2411.03982},
+  year={2024}
+}
+```
