@@ -1,4 +1,10 @@
-# ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models
+# ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models (WACV 2025)
+
+## [<a href="https://reedit-diffusion.github.io/" target="_blank">Project Page</a>]
+[![arXiv](https://img.shields.io/badge/arXiv-ReEdit-b31b1b.svg)](https://arxiv.org/abs/2411.03982)
+[![GitHub](https://img.shields.io/badge/GitHub-ReEdit-4CAF50)](https://github.com/reedit-diffusion/reedit-diffusion.github.io)
+
+![ReEdit Overview](static/images/banner.jpg)
 
 ReEdit is an efficient end-to-end optimization-free framework for exemplar-based image editing. Unlike existing approaches, it doesn't require fine-tuning or optimization during inference time.
 
