@@ -1,6 +1,6 @@
 # ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models (WACV 2025)
 
-## [<a href="https://reedit-diffusion.github.io/" target="_blank">Project Page</a>]
+[![Project](https://img.shields.io/badge/Project-Page-blue)](https://reedit-diffusion.github.io/)
 [![arXiv](https://img.shields.io/badge/arXiv-ReEdit-b31b1b.svg)](https://arxiv.org/abs/2411.03982)
 [![GitHub](https://img.shields.io/badge/GitHub-ReEdit-4CAF50)](https://github.com/reedit-diffusion/reedit-diffusion)
 
@@ -54,10 +54,12 @@ Compared to baselines:
 ## Citation
 
 ```
-@article{srivastava2024reedit,
-  title={ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models},
-  author={Srivastava, Ashutosh and Menta, Tarun Ram and Java, Abhinav and Jadhav, Avadhoot and Singh, Silky and Jandial, Surgan and Krishnamurthy, Balaji},
-  journal={arXiv preprint arXiv:2411.03982},
-  year={2024}
+@InProceedings{Srivastava_2025_WACV,
+    author    = {Srivastava, Ashutosh and Menta, Tarun Ram and Java, Abhinav and Jadhav, Avadhoot Gorakh and Singh, Silky and Jandial, Surgan and Krishnamurthy, Balaji},
+    title     = {ReEdit: Multimodal Exemplar-Based Image Editing},
+    booktitle = {Proceedings of the Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {February},
+    year      = {2025},
+    pages     = {929-939}
 }
 ```
