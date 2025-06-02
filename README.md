@@ -1,8 +1,9 @@
 # ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models (WACV 2025)
 
 [![Project](https://img.shields.io/badge/Project-Page-blue)](https://reedit-diffusion.github.io/)
-[![arXiv](https://img.shields.io/badge/arXiv-ReEdit-b31b1b.svg)](https://arxiv.org/abs/2411.03982)
-[![GitHub](https://img.shields.io/badge/GitHub-ReEdit-4CAF50)](https://github.com/reedit-diffusion/reedit-diffusion)
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-b31b1b.svg)](https://arxiv.org/abs/2411.03982)
+[![GitHub](https://img.shields.io/badge/GitHub-Code-4CAF50)](https://github.com/reedit-diffusion/reedit-diffusion)
+[![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/tarun-menta/re-edit-bench)
 
 ![ReEdit Overview](static/images/banner.jpg)
 
