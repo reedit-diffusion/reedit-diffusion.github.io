@@ -1,4 +1,4 @@
-# ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models (WACV 2025)
+# ReEdit: Multimodal Exemplar-Based Image Editing with Diffusion Models (WACV 2025) (ECCV24W)
 
 [![Project](https://img.shields.io/badge/Project-Page-blue)](https://reedit-diffusion.github.io/)
 [![arXiv](https://img.shields.io/badge/arXiv-Paper-b31b1b.svg)](https://arxiv.org/abs/2411.03982)
